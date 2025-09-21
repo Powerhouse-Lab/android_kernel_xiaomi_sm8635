@@ -57,9 +57,9 @@
 #ifndef _UAPI__LINUX_VIDEODEV2_H
 #define _UAPI__LINUX_VIDEODEV2_H
 
-#include <linux/time.h>
 #include <linux/compiler.h>
 #include <linux/ioctl.h>
+#include <linux/time.h>
 #include <linux/types.h>
 #include <linux/v4l2-common.h>
 #include <linux/v4l2-controls.h>
