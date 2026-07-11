@@ -5261,12 +5261,12 @@ static ssize_t __cgroup_procs_write(struct kernfs_open_file *of, char *buf,
 		task_is_zygote(task->parent) && kp_active_mode() != 1) {
 		switch (kp_active_mode()) {
 		case 3:
-			cpu_boost_max(2000);
 			qcom_dcvs_bus_boost_kick_max(3000);
+			cpu_boost_max(2000);
 			break;
 		default:
-			cpu_boost_max(1000);
-			qcom_dcvs_bus_boost_kick_max(1500);
+			qcom_dcvs_bus_boost_kick(3000);
+			cpu_boost_kick(2000);
 			break;
 		}
 	}
