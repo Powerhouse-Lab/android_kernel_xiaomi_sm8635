@@ -292,10 +292,6 @@ static long ashmem_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 static long compat_ashmem_ioctl(struct file *file, unsigned int cmd,
 				unsigned long arg)
 {
-	struct ashmem_area *asma = file->private_data;
-	unsigned long ino;
-	long ret;
-
 	switch (cmd) {
 	case COMPAT_ASHMEM_SET_SIZE:
 		cmd = ASHMEM_SET_SIZE;
@@ -303,12 +299,6 @@ static long compat_ashmem_ioctl(struct file *file, unsigned int cmd,
 	case COMPAT_ASHMEM_SET_PROT_MASK:
 		cmd = ASHMEM_SET_PROT_MASK;
 		break;
-	case COMPAT_ASHMEM_GET_FILE_ID:
-		ret = get_file_id(asma, &ino);
-		if (ret)
-			return ret;
-
-		return put_user(ino, (compat_uptr_t __user *)compat_ptr(arg)) ? -EFAULT : 0;
 	}
 	return ashmem_ioctl(file, cmd, arg);
 }

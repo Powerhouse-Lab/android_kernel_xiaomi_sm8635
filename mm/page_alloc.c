@@ -5364,8 +5364,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
 				(__GFP_ATOMIC|__GFP_DIRECT_RECLAIM)))
 		gfp_mask &= ~__GFP_ATOMIC;
 
-	trace_android_vh_alloc_pages_slowpath_start(&stime);
-
 restart:
 	compaction_retries = 0;
 	no_progress_loops = 0;
@@ -5492,8 +5490,7 @@ restart:
 		}
 	}
 
-retry:
-	retry_loop_count++;
+    retry:
 	/*
 	 * Deal with possible cpuset update races or zonelist updates to avoid
 	 * infinite retries.
@@ -5550,8 +5547,7 @@ retry:
 	if (!used_vmpressure)
 		used_vmpressure = vmpressure_inc_users(order);
 	page = __alloc_pages_direct_reclaim(gfp_mask, order, alloc_flags, ac,
-							&did_some_progress);
-	pages_reclaimed += did_some_progress;
+				&did_some_progress);
 	if (page)
 		goto got_pg;
 
@@ -5681,8 +5677,6 @@ got_pg:
 					"page allocation failure: order:%u", order);
 	}
 	trace_android_vh_alloc_pages_slowpath(gfp_mask, order, alloc_start);
-	trace_android_vh_alloc_pages_slowpath_end(&gfp_mask, order, alloc_start,
-			stime, did_some_progress, pages_reclaimed, retry_loop_count);
 	return page;
 }
 
